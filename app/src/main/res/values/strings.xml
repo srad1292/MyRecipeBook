@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">MyRecipeBook</string>
+    <string name="home_header">Recipe Book</string>
+    <string name="recipes_button">Recipes</string>
+    <string name="shopping_list_button">Shopping List</string>
+    <string name="pantry_button">Pantry</string>
+    <string name="meal_builder_button">Meal Builder</string>
+    <string name="ingredient_header">Ingredients</string>
+    <string name="directions_header">Directions</string>
+    <string name="servings_header">Servings</string>
+    <string name="to_make_heading">To Make</string>
+
+    <string name="drop_meat">Meats</string>
+    <string name="drop_fruit">Fruits</string>
+    <string name="drop_vegetables">Vegetables</string>
+    <string name="drop_dairy">Dairy</string>
+    <string name="drop_sauces">Sauces</string>
+    <string name="drop_spices">Spices</string>
+    <string name="drop_canned">Canned</string>
+    <string name="drop_sweets">Sweets</string>
+    <string name="drop_basic_ingredients">Basic Ingredients</string>
+    <string name="drop_mixes">Mixes</string>
+    <string name="drop_chips">Chips</string>
+    <string name="drop_crackers">Crackers</string>
+    <string name="drop_cereals">Cereals</string>
+    <string name="drop_drinks">Drinks</string>
+    <string name="drop_alcohol">Alcohol</string>
+    <string name="drop_other">Other</string>
+
+    <string name="Ingredient">Ingredient</string>
+    <string name="category">Category</string>
+
+    <string name="done">Done</string>
+    <string name="confirm">Yes</string>
+    <string name="deny">No</string>
+    <string name="exit_question">Do you want to exit?</string>
+</resources>
