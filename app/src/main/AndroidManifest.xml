@@ -8,7 +8,11 @@
         android:label="@string/home_header"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RecipeActivity" />
+        <activity android:name=".ShoppingListActivity" />
+        <activity android:name=".PantryActivity" />
+        <activity android:name=".MealBuilderActivity"></activity>
     </application>
 
 </manifest>
