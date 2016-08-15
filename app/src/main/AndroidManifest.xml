@@ -7,12 +7,20 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/home_header"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity" />
-        <activity android:name=".RecipeActivity" />
-        <activity android:name=".ShoppingListActivity" />
-        <activity android:name=".PantryActivity" />
-        <activity android:name=".MealBuilderActivity"></activity>
+        <activity
+            android:name=".RecipeActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".ShoppingListActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".PantryActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MealBuilderActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

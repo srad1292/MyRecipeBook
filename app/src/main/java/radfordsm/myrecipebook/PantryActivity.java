@@ -1,6 +1,6 @@
 package radfordsm.myrecipebook;
 
-import android.app.Activity;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PantryActivity extends Activity {
+public class PantryActivity extends AppCompatActivity {
 
 
     ExpandableListAdapter listAdapter;
