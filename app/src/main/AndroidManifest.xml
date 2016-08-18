@@ -26,6 +26,10 @@
         <activity
             android:name=".MealBuilderActivity"
             android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".EditShoppingListActivity"
+            android:parentActivityName=".ShoppingListActivity"/>
     </application>
 
 </manifest>

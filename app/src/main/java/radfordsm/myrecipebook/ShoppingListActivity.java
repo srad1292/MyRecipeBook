@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class ShoppingListActivity extends AppCompatActivity {
 
     final int RESULT = 1;
-    private TextView textField = (TextView) findViewById(R.id.shopping_list_text);;
+    private TextView textField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,8 @@ public class ShoppingListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_menu_shopping:
+                textField = (TextView) findViewById(R.id.shopping_list_text);
+
                 Intent intent = new Intent(this, EditShoppingListActivity.class);
 
                 if(textField.getText().toString().length() > 0){
@@ -46,6 +48,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                 }
 
                 startActivityForResult(intent,RESULT);
+
                 return true;
 
 
@@ -57,6 +60,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -65,4 +69,5 @@ public class ShoppingListActivity extends AppCompatActivity {
             textField.setText(data.getStringExtra("newText"));
         }
     }
+
 }

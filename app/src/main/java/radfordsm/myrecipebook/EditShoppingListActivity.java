@@ -13,7 +13,7 @@ import android.widget.EditText;
  */
 public class EditShoppingListActivity extends AppCompatActivity {
 
-    private EditText editTextField = (EditText) findViewById(R.id.edit_shopping_list_text_field);
+    private EditText editTextField;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +21,7 @@ public class EditShoppingListActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.edit_shopping_list_toolbar);
         myToolbar.setTitle(R.string.shopping_list_button);
         setSupportActionBar(myToolbar);
-
+        editTextField = (EditText) findViewById(R.id.edit_shopping_list_text_field);
     }
 
     @Override
@@ -36,11 +36,14 @@ public class EditShoppingListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_menu_edit_shopping:
+
+
                 Intent goingBack = new Intent();
                 goingBack.putExtra("value","1");
                 goingBack.putExtra("newText",editTextField.getText());
                 setResult(RESULT_OK,goingBack);
                 finish();
+
                 return true;
 
 
