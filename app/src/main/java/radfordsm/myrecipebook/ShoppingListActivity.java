@@ -1,17 +1,21 @@
 package radfordsm.myrecipebook;
 
 
-import android.support.v7.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
+
 
 public class ShoppingListActivity extends AppCompatActivity {
+
+    final int RESULT = 1;
+    private TextView textField = (TextView) findViewById(R.id.shopping_list_text);;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +38,14 @@ public class ShoppingListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_menu_edit:
-                //User pressed edit
-                final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle("hi");
-                alertDialog.setMessage("this is my app");
-                alertDialog.show();
-                final Timer timer2 = new Timer();
-                timer2.schedule(new TimerTask() {
-                    public void run() {
-                        alertDialog.dismiss();
-                        timer2.cancel(); //this will cancel the timer of the system
-                    }
-                }, 5000); // the timer will count 5 seconds....
+            case R.id.action_menu_shopping:
+                Intent intent = new Intent(this, EditShoppingListActivity.class);
 
+                if(textField.getText().toString().length() > 0){
+                    intent.putExtra("text",textField.getText());
+                }
+
+                startActivityForResult(intent,RESULT);
                 return true;
 
 
@@ -56,6 +54,15 @@ public class ShoppingListActivity extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        //check that activity wasn't cancelled
+        if(!data.getStringExtra("value").equals("3")){
+            textField.setText(data.getStringExtra("newText"));
         }
     }
 }
