@@ -40,7 +40,7 @@ public class EditShoppingListActivity extends AppCompatActivity {
 
                 Intent goingBack = new Intent();
                 goingBack.putExtra("value","1");
-                goingBack.putExtra("newText",editTextField.getText());
+                goingBack.putExtra("newText",editTextField.getText().toString());
                 setResult(RESULT_OK,goingBack);
                 finish();
 
@@ -53,5 +53,13 @@ public class EditShoppingListActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent goingBack = new Intent();
+        goingBack.putExtra("value",3);
+        setResult(RESULT_CANCELED,goingBack);
+        finish();
     }
 }

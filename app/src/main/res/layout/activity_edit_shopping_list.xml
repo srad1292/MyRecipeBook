@@ -21,10 +21,19 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <EditText
-        android:id="@+id/edit_shopping_list_text_field"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:maxLines="60"
-        />
+        android:fillViewport="true">
+
+        <EditText
+            android:id="@+id/edit_shopping_list_text_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLines="60"
+            />
+
+    </ScrollView>
+
 </LinearLayout>

@@ -21,10 +21,16 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <TextView
-        android:id="@+id/shopping_list_text"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true">
+        <TextView
+            android:id="@+id/shopping_list_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
-        />
+    </ScrollView>
+
 </LinearLayout>
