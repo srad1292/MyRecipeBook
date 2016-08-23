@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Ensure user wants to exit then close it if so
     @Override
     public void onBackPressed(){
         new AlertDialog.Builder(this)
