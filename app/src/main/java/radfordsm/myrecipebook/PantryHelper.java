@@ -18,7 +18,7 @@ public class PantryHelper extends SQLiteOpenHelper {
     static final String vegetables = "Vegetables";
     static final String dairy = "Dairy";
     static final String breads = "Breads";
-    static final String jams = "Jams"
+    static final String jams = "Jams";
     static final String sauces = "Sauces";
     static final String spices = "Spices";
     static final String mixes = "Mixes";
@@ -54,7 +54,7 @@ public class PantryHelper extends SQLiteOpenHelper {
                 + oils + " TEXT" + basic_ingredients + " TEXT" + canned_foods + " TEXT"
                 + sweets + " TEXT" + chips + " TEXT" + crackers + " TEXT" + cereals + " TEXT"
                 + snacks + " TEXT" + drinks + " TEXT" + alcohol + " TEXT" + other + " TEXT"
-        + ");";
+                + ");";
 
 
         db.execSQL(CREATE_ACCOUNTS_TABLE);
