@@ -11,6 +11,7 @@ public class PantryHelper extends SQLiteOpenHelper {
 
     static final String TABLE_NAME = "Pantry";
     static final String _id = "_id";
+    //static final String name = "name";
     static final String meats = "Meats";
     static final String poultry = "Poultry";
     static final String fish = "Fish";
@@ -48,12 +49,12 @@ public class PantryHelper extends SQLiteOpenHelper {
         String CREATE_ACCOUNTS_TABLE = "CREATE TABLE " +
                 TABLE_NAME + "("
                 + _id + " TEXT PRIMARY KEY, " + meats
-                + " TEXT, " + poultry + " TEXT, " + fish + " TEXT" + fruits + " TEXT"
-                + vegetables + " TEXT" + dairy + " TEXT" + breads + " TEXT" + jams + " TEXT"
-                + sauces + " TEXT" + spices + " TEXT" + mixes + " TEXT" + dressings + " TEXT"
-                + oils + " TEXT" + basic_ingredients + " TEXT" + canned_foods + " TEXT"
-                + sweets + " TEXT" + chips + " TEXT" + crackers + " TEXT" + cereals + " TEXT"
-                + snacks + " TEXT" + drinks + " TEXT" + alcohol + " TEXT" + other + " TEXT"
+                + " TEXT, " + poultry + " TEXT, " + fish + " TEXT, " + fruits + " TEXT, "
+                + vegetables + " TEXT, " + dairy + " TEXT, " + breads + " TEXT, " + jams + " TEXT, "
+                + sauces + " TEXT, " + spices + " TEXT, " + mixes + " TEXT, " + dressings + " TEXT, "
+                + oils + " TEXT, " + basic_ingredients + " TEXT, " + canned_foods + " TEXT, "
+                + sweets + " TEXT, " + chips + " TEXT, " + crackers + " TEXT, " + cereals + " TEXT, "
+                + snacks + " TEXT, " + drinks + " TEXT, " + alcohol + " TEXT, " + other + " TEXT, "
                 + ");";
 
 
