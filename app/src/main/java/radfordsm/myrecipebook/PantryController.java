@@ -14,6 +14,8 @@ public class PantryController {
     private Context our_context;
     private SQLiteDatabase database;
     private PantryHelper pantry_helper;
+    static final int NUMBER_OF_COLUMNS = 24;
+
 
     public PantryController(Context c){
         our_context = c;
@@ -25,6 +27,8 @@ public class PantryController {
         return this;
 
     }
+
+
 
     public void close(){
         pantry_helper.close();
@@ -59,7 +63,7 @@ public class PantryController {
                       String cereals, String snacks, String drinks, String alcohol, String other){
 
         ContentValues cv = new ContentValues();
-
+        cv.put(PantryHelper._id,id);
         cv.put(PantryHelper.meats,meats);
         cv.put(PantryHelper.poultry,poultry);
         cv.put(PantryHelper.fish,fish);
@@ -92,6 +96,48 @@ public class PantryController {
 
     public void delete(int id) {
         database.delete(PantryHelper.TABLE_NAME, PantryHelper._id + " = '" + id + "'", null);
+    }
+
+
+    public void insert(String[] values) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(PantryHelper._id, values[0]);
+        cv.put(PantryHelper.meats, values[1]);
+        cv.put(PantryHelper.poultry, values[2]);
+        cv.put(PantryHelper.fish, values[3]);
+        cv.put(PantryHelper.fruits, values[4]);
+        cv.put(PantryHelper.vegetables, values[5]);
+        cv.put(PantryHelper.dairy, values[6]);
+        cv.put(PantryHelper.breads, values[7]);
+        cv.put(PantryHelper.jams, values[8]);
+        cv.put(PantryHelper.sauces, values[9]);
+        cv.put(PantryHelper.spices, values[10]);
+        cv.put(PantryHelper.mixes, values[11]);
+        cv.put(PantryHelper.dressings, values[12]);
+        cv.put(PantryHelper.oils, values[13]);
+        cv.put(PantryHelper.basic_ingredients, values[14]);
+        cv.put(PantryHelper.canned_foods, values[15]);
+        cv.put(PantryHelper.sweets, values[16]);
+        cv.put(PantryHelper.chips, values[17]);
+        cv.put(PantryHelper.chips, values[18]);
+        cv.put(PantryHelper.cereals, values[19]);
+        cv.put(PantryHelper.snacks, values[20]);
+        cv.put(PantryHelper.drinks, values[21]);
+        cv.put(PantryHelper.alcohol, values[22]);
+        cv.put(PantryHelper.other, values[23]);
+
+        database.insert(PantryHelper.TABLE_NAME, null, cv);
+    }
+
+    public String[] getColumnNames(){
+        Cursor cursor = database.rawQuery("SELECT * FROM " + PantryHelper.TABLE_NAME + " LIMIT 1", null);
+        String[] colNames = cursor.getColumnNames();
+        return colNames;
+    }
+
+    public int getNumberOfColumns(){
+        return NUMBER_OF_COLUMNS;
     }
 }
 

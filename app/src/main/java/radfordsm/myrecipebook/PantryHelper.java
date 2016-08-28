@@ -37,7 +37,7 @@ public class PantryHelper extends SQLiteOpenHelper {
     static final String other = "Other";
 
     static final String DB_NAME = "Pantry.DB";
-    static final int DB_VERSION = 1;
+    static final int DB_VERSION = 3;
 
 
     public PantryHelper(Context context){
@@ -46,7 +46,7 @@ public class PantryHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_ACCOUNTS_TABLE = "CREATE TABLE " +
+        String CREATE_PANTRY_TABLE = "CREATE TABLE " +
                 TABLE_NAME + "("
                 + _id + " TEXT PRIMARY KEY, " + meats
                 + " TEXT, " + poultry + " TEXT, " + fish + " TEXT, " + fruits + " TEXT, "
@@ -54,11 +54,11 @@ public class PantryHelper extends SQLiteOpenHelper {
                 + sauces + " TEXT, " + spices + " TEXT, " + mixes + " TEXT, " + dressings + " TEXT, "
                 + oils + " TEXT, " + basic_ingredients + " TEXT, " + canned_foods + " TEXT, "
                 + sweets + " TEXT, " + chips + " TEXT, " + crackers + " TEXT, " + cereals + " TEXT, "
-                + snacks + " TEXT, " + drinks + " TEXT, " + alcohol + " TEXT, " + other + " TEXT, "
+                + snacks + " TEXT, " + drinks + " TEXT, " + alcohol + " TEXT, " + other + " TEXT"
                 + ");";
 
 
-        db.execSQL(CREATE_ACCOUNTS_TABLE);
+        db.execSQL(CREATE_PANTRY_TABLE);
 
     }
 

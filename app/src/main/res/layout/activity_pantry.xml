@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -10,10 +11,23 @@
     android:orientation="vertical"
     tools:context="radfordsm.myrecipebook.PantryActivity">
 
-    <ExpandableListView
-        android:id="@+id/pantry_accordion"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/pantry_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    </ExpandableListView>
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <ExpandableListView
+            android:id="@+id/pantry_accordion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ExpandableListView>
+    </ScrollView>
+
 </LinearLayout>
