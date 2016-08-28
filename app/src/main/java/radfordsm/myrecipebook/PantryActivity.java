@@ -1,10 +1,23 @@
 package radfordsm.myrecipebook;
 
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -14,17 +27,21 @@ import java.util.List;
 public class PantryActivity extends AppCompatActivity {
 
 
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
-    PantryController pc;
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
+    private List<String> listDataHeader;
+    private HashMap<String, List<String>> listDataChild;
+    private PantryController pc;
+    private Cursor c;
+    private EditText result;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantry);
-
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.action_menu_pantry);
+        setSupportActionBar(myToolbar);
         pc = new PantryController(this);
 
         // get the listview
@@ -95,6 +112,68 @@ public class PantryActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_menu_pantry:
+                LayoutInflater li = LayoutInflater.from(this);
+                View prompt = li.inflate(R.layout.prompt_new_pantry_item,null);
+
+                AlertDialog.Builder aDB = new AlertDialog.Builder(this);
+
+                aDB.setView(prompt);
+                Spinner dropdown = (Spinner) prompt.findViewById(R.id.pantry_prompt_spinner);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listDataHeader);
+                dropdown.setAdapter(adapter);
+                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String item = parent.getItemAtPosition(position).toString();
+                        Log.i("item", item);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+
+                });
+                final EditText item_name = (EditText) prompt.findViewById(R.id.pantry_prompt_text);
+
+                aDB.setCancelable(false).setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        result.setText(item_name.getText());
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = aDB.create();
+
+                // show it
+                alertDialog.show();
+
+                return true;
+
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+
+
     private void prepareListData() {
 
         listDataHeader = new ArrayList<String>();
@@ -125,30 +204,246 @@ public class PantryActivity extends AppCompatActivity {
         listDataHeader.add("Alcohol");
         listDataHeader.add("Other");
 
+        pc.open();
+        c = pc.fetch();
         // Adding child data
         List<String> meats = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!meats.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("meats")).equals("yes")){
+                    meats.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> poultry = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!poultry.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("poultry")).equals("yes")){
+                    poultry.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> fish = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!fish.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("fish")).equals("yes")){
+                    fish.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> fruits = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!fruits.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("fruits")).equals("yes")){
+                    fruits.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> vegetables = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!vegetables.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("vegetables")).equals("yes")){
+                    vegetables.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> dairy = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!dairy.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("dairy")).equals("yes")){
+                    dairy.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> breads = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!breads.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("breads")).equals("yes")){
+                    breads.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> jams = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!jams.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("jams")).equals("yes")){
+                    jams.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> sauces = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!sauces.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("sauces")).equals("yes")){
+                    sauces.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> spices = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!spices.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("spices")).equals("yes")){
+                    spices.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> mixes = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!mixes.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("mixes")).equals("yes")){
+                    mixes.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> dressings = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!dressings.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("dressings")).equals("yes")){
+                    dressings.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> oils = new ArrayList<String>();
-        List<String> basic_ingrdients = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!oils.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("oils")).equals("yes")){
+                    oils.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
+        List<String> basic_ingredients = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!basic_ingredients.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("basic_ingredients")).equals("yes")){
+                    basic_ingredients.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> canned_foods = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!canned_foods.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("canned_foods")).equals("yes")){
+                    canned_foods.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> sweets = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!sweets.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("sweets")).equals("yes")){
+                    sweets.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> chips = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!chips.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("chips")).equals("yes")){
+                    chips.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
         List<String> crackers = new ArrayList<String>();
-        List<String> cereals = new ArrayList<String>();
-        List<String> snacks = new ArrayList<String>();
-        List<String> drinks = new ArrayList<String>();
-        List<String> alcohol = new ArrayList<String>();
-        List<String> other = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!crackers.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("crackers")).equals("yes")){
+                    crackers.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
 
+
+        List<String> cereals = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!cereals.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("cereals")).equals("yes")){
+                    cereals.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+
+
+        List<String> snacks = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!snacks.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("snacks")).equals("yes")){
+                    snacks.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+
+
+        List<String> drinks = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!drinks.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("drinks")).equals("yes")){
+                    drinks.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+
+
+        List<String> alcohol = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!alcohol.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("alcohol")).equals("yes")){
+                    alcohol.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+
+
+        List<String> other = new ArrayList<String>();
+        if (c!=null && c.moveToFirst()){
+            do{
+                if(!other.contains(c.getString(c.getColumnIndex("_id")))&&c.getString(c.getColumnIndex("other")).equals("yes")){
+                    other.add(c.getString(c.getColumnIndex("_id")));
+                }
+            }while(c.moveToNext());
+        }
+        
+        
+        pc.close();
+
+        listDataChild.put(listDataHeader.get(0), meats); 
+        listDataChild.put(listDataHeader.get(1), poultry);
+        listDataChild.put(listDataHeader.get(2), fish);
+        listDataChild.put(listDataHeader.get(3), fruits); 
+        listDataChild.put(listDataHeader.get(4), vegetables);
+        listDataChild.put(listDataHeader.get(5), dairy);
+        listDataChild.put(listDataHeader.get(6), breads); 
+        listDataChild.put(listDataHeader.get(7), jams);
+        listDataChild.put(listDataHeader.get(8), sauces);
+        listDataChild.put(listDataHeader.get(9), spices);
+        listDataChild.put(listDataHeader.get(10), mixes);
+        listDataChild.put(listDataHeader.get(11), dressings);
+        listDataChild.put(listDataHeader.get(12), oils);
+        listDataChild.put(listDataHeader.get(13), basic_ingredients);
+        listDataChild.put(listDataHeader.get(14), canned_foods);
+        listDataChild.put(listDataHeader.get(15), sweets);
+        listDataChild.put(listDataHeader.get(16), chips);
+        listDataChild.put(listDataHeader.get(17), crackers);
+        listDataChild.put(listDataHeader.get(18), cereals);
+        listDataChild.put(listDataHeader.get(19), snacks);
+        listDataChild.put(listDataHeader.get(20), drinks);
+        listDataChild.put(listDataHeader.get(21), alcohol);
+        listDataChild.put(listDataHeader.get(22), other);
     }
 }

@@ -46,6 +46,12 @@ public class PantryController {
         return cursor;
     }
 
+    /**
+    public Cursor getX(String column_name){
+        String[] columns = new String[] {}
+        return cursor;
+    }*/
+
     public int update(String id, String meats, String poultry, String fish, String fruits,
                       String vegetables, String dairy, String breads, String jams,
                       String sauces, String spices, String mixes, String dressings, String oils,

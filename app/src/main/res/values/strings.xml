@@ -42,4 +42,7 @@
     <string name="confirm">Yes</string>
     <string name="deny">No</string>
     <string name="exit_question">Do you want to exit?</string>
+
+
+    <string name="hint_pantry">Ketchup</string>
 </resources>
