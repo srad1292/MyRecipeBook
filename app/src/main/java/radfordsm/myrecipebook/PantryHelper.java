@@ -25,8 +25,8 @@ public class PantryHelper extends SQLiteOpenHelper {
     static final String mixes = "Mixes";
     static final String dressings = "Dressings";
     static final String oils = "Oils";
-    static final String basic_ingredients = "Basic Ingredients";
-    static final String canned_foods = "Canned Foods";
+    static final String basics = "Basics";
+    static final String canned = "Canned";
     static final String sweets = "Sweets";
     static final String chips = "Chips";
     static final String crackers = "Crackers";
@@ -37,7 +37,7 @@ public class PantryHelper extends SQLiteOpenHelper {
     static final String other = "Other";
 
     static final String DB_NAME = "Pantry.DB";
-    static final int DB_VERSION = 3;
+    static final int DB_VERSION = 4;
 
 
     public PantryHelper(Context context){
@@ -52,7 +52,7 @@ public class PantryHelper extends SQLiteOpenHelper {
                 + " TEXT, " + poultry + " TEXT, " + fish + " TEXT, " + fruits + " TEXT, "
                 + vegetables + " TEXT, " + dairy + " TEXT, " + breads + " TEXT, " + jams + " TEXT, "
                 + sauces + " TEXT, " + spices + " TEXT, " + mixes + " TEXT, " + dressings + " TEXT, "
-                + oils + " TEXT, " + basic_ingredients + " TEXT, " + canned_foods + " TEXT, "
+                + oils + " TEXT, " + basics + " TEXT, " + canned + " TEXT, "
                 + sweets + " TEXT, " + chips + " TEXT, " + crackers + " TEXT, " + cereals + " TEXT, "
                 + snacks + " TEXT, " + drinks + " TEXT, " + alcohol + " TEXT, " + other + " TEXT"
                 + ");";

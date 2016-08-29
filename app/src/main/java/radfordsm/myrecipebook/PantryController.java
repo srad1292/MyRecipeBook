@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * Created by San on 8/23/2016.
@@ -40,10 +41,9 @@ public class PantryController {
                 PantryHelper.poultry, PantryHelper.fish, PantryHelper.fruits,
                 PantryHelper.vegetables, PantryHelper.dairy, PantryHelper.breads, PantryHelper.jams,
                 PantryHelper.sauces, PantryHelper.spices, PantryHelper.mixes, PantryHelper.dressings, PantryHelper.oils,
-                PantryHelper.basic_ingredients, PantryHelper.canned_foods, PantryHelper.sweets, PantryHelper.chips, PantryHelper.crackers,
-                PantryHelper.cereals, PantryHelper.snacks, PantryHelper.drinks, PantryHelper.alcohol, PantryHelper.other, };
-        Cursor cursor = database.query(PantryHelper.TABLE_NAME, columns, null,
-                null, null, null, null);
+                PantryHelper.basics, PantryHelper.canned, PantryHelper.sweets, PantryHelper.chips, PantryHelper.crackers,
+                PantryHelper.cereals, PantryHelper.snacks, PantryHelper.drinks, PantryHelper.alcohol, PantryHelper.other};
+        Cursor cursor = database.query(PantryHelper.TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -59,7 +59,7 @@ public class PantryController {
     public int update(String id, String meats, String poultry, String fish, String fruits,
                       String vegetables, String dairy, String breads, String jams,
                       String sauces, String spices, String mixes, String dressings, String oils,
-                      String basic_ingredients, String canned_foods, String sweets, String chips, String crackers,
+                      String basics, String canned, String sweets, String chips, String crackers,
                       String cereals, String snacks, String drinks, String alcohol, String other){
 
         ContentValues cv = new ContentValues();
@@ -77,8 +77,8 @@ public class PantryController {
         cv.put(PantryHelper.mixes,mixes);
         cv.put(PantryHelper.dressings,dressings);
         cv.put(PantryHelper.oils,oils);
-        cv.put(PantryHelper.basic_ingredients,basic_ingredients);
-        cv.put(PantryHelper.canned_foods,canned_foods);
+        cv.put(PantryHelper.basics,basics);
+        cv.put(PantryHelper.canned,canned);
         cv.put(PantryHelper.sweets,sweets);
         cv.put(PantryHelper.chips,chips);
         cv.put(PantryHelper.chips,crackers);
@@ -99,34 +99,37 @@ public class PantryController {
     }
 
 
-    public void insert(String[] values) {
+    public void insert(String[] v) {
 
         ContentValues cv = new ContentValues();
-        cv.put(PantryHelper._id, values[0]);
-        cv.put(PantryHelper.meats, values[1]);
-        cv.put(PantryHelper.poultry, values[2]);
-        cv.put(PantryHelper.fish, values[3]);
-        cv.put(PantryHelper.fruits, values[4]);
-        cv.put(PantryHelper.vegetables, values[5]);
-        cv.put(PantryHelper.dairy, values[6]);
-        cv.put(PantryHelper.breads, values[7]);
-        cv.put(PantryHelper.jams, values[8]);
-        cv.put(PantryHelper.sauces, values[9]);
-        cv.put(PantryHelper.spices, values[10]);
-        cv.put(PantryHelper.mixes, values[11]);
-        cv.put(PantryHelper.dressings, values[12]);
-        cv.put(PantryHelper.oils, values[13]);
-        cv.put(PantryHelper.basic_ingredients, values[14]);
-        cv.put(PantryHelper.canned_foods, values[15]);
-        cv.put(PantryHelper.sweets, values[16]);
-        cv.put(PantryHelper.chips, values[17]);
-        cv.put(PantryHelper.chips, values[18]);
-        cv.put(PantryHelper.cereals, values[19]);
-        cv.put(PantryHelper.snacks, values[20]);
-        cv.put(PantryHelper.drinks, values[21]);
-        cv.put(PantryHelper.alcohol, values[22]);
-        cv.put(PantryHelper.other, values[23]);
-
+        for(String s: v){
+            Log.i("values : ", s);
+        }
+        cv.put(PantryHelper._id, v[0]);
+        cv.put(PantryHelper.meats, v[1]);
+        cv.put(PantryHelper.poultry, v[2]);
+        cv.put(PantryHelper.fish, v[3]);
+        cv.put(PantryHelper.fruits, v[4]);
+        cv.put(PantryHelper.vegetables, v[5]);
+        cv.put(PantryHelper.dairy, v[6]);
+        cv.put(PantryHelper.breads, v[7]);
+        cv.put(PantryHelper.jams, v[8]);
+        cv.put(PantryHelper.sauces, v[9]);
+        cv.put(PantryHelper.spices, v[10]);
+        cv.put(PantryHelper.mixes, v[11]);
+        cv.put(PantryHelper.dressings, v[12]);
+        cv.put(PantryHelper.oils, v[13]);
+        cv.put(PantryHelper.basics, v[14]);
+        cv.put(PantryHelper.canned, v[15]);
+        cv.put(PantryHelper.sweets, v[16]);
+        cv.put(PantryHelper.chips, v[17]);
+        cv.put(PantryHelper.chips, v[18]);
+        cv.put(PantryHelper.cereals, v[19]);
+        cv.put(PantryHelper.snacks, v[20]);
+        cv.put(PantryHelper.drinks, v[21]);
+        cv.put(PantryHelper.alcohol, v[22]);
+        cv.put(PantryHelper.other, v[23]);
+        Log.i("Vals ", String.valueOf(cv));
         database.insert(PantryHelper.TABLE_NAME, null, cv);
     }
 

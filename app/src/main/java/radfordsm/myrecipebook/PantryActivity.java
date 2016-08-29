@@ -23,8 +23,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class PantryActivity extends AppCompatActivity {
 
@@ -38,7 +41,11 @@ public class PantryActivity extends AppCompatActivity {
     private EditText result;
     private String chosen;
     private String given_name;
-    private HashMap<String, String> category_map;
+    private LinkedHashMap<String, String> category_map;
+    List<String> meats,poultry,fish,fruits,vegetables,dairy,breads;
+    List<String> jams,sauces,spices,mixes,dressings,oils,basics;
+    List<String> canned,sweets,chips,crackers,cereals,snacks,drinks,alcohol,other;
+
 
 
     @Override
@@ -159,7 +166,9 @@ public class PantryActivity extends AppCompatActivity {
                                         // get user input and set it to result
                                         // edit text
                                         given_name = item_name.getText().toString();
+                                        Log.i("Given Name: ", given_name);
                                         chosen = dropdown.getSelectedItem().toString();
+                                        Log.i("Chosen Spinner: ", chosen);
                                         addNewItem(given_name,chosen);
                                     }
                                 })
@@ -189,14 +198,16 @@ public class PantryActivity extends AppCompatActivity {
 
 
     private void initCatMap(){
-        category_map = new HashMap<>();
+        category_map = new LinkedHashMap<>();
         pc.open();
         String[] names = pc.getColumnNames();
         int l = names.length;
-        Log.i("Number of columns: ", l+" ");
+        //Log.i("Number of columns: ", l+" ");
+
         String t;
         for(int iter = 0; iter < l; iter++){
             t = names[iter];
+            //Log.i("Name " + iter + " ", t);
             if(!category_map.containsKey(t)){
                 category_map.put(t,"no");
             }
@@ -208,14 +219,23 @@ public class PantryActivity extends AppCompatActivity {
         pc.open();
 
         category_map.put(cat,"yes");
+        Log.i("cat : ", cat);
+        Log.i("cat_map has key: ", String.valueOf(category_map.containsKey(cat)));
+
         String[] column_vals = new String[pc.getNumberOfColumns()];
 
         column_vals[0] = name;
         int iter = 0;
-
+        //Set s = category_map.entrySet();
+        //Iterator i = s.iterator();
         for(Map.Entry<String, String> entry: category_map.entrySet()) {
             if(iter > 0){
                 column_vals[iter] = entry.getValue();
+                /**
+                Log.i("entry key: ", entry.getKey());
+                Log.i("entry valye: ", entry.getValue());
+                Log.i("column vals " + iter + " ", column_vals[iter]);
+                 */
             }
             iter++;
         }
@@ -245,8 +265,8 @@ public class PantryActivity extends AppCompatActivity {
         listDataHeader.add("Mixes");
         listDataHeader.add("Dressings");
         listDataHeader.add("Oils");
-        listDataHeader.add("Basic Ingredients");
-        listDataHeader.add("Canned Foods");
+        listDataHeader.add("Basic");
+        listDataHeader.add("Canned");
         listDataHeader.add("Sweets");
         listDataHeader.add("Chips");
         listDataHeader.add("Crackers");
@@ -255,6 +275,31 @@ public class PantryActivity extends AppCompatActivity {
         listDataHeader.add("Drinks");
         listDataHeader.add("Alcohol");
         listDataHeader.add("Other");
+
+        meats = new ArrayList<String>();
+        poultry = new ArrayList<String>();
+        fish = new ArrayList<String>();
+        fruits = new ArrayList<String>();
+        vegetables = new ArrayList<String>();
+        dairy = new ArrayList<String>();
+        breads = new ArrayList<String>();
+        jams = new ArrayList<String>();
+        sauces = new ArrayList<String>();
+        spices = new ArrayList<String>();
+        mixes = new ArrayList<String>();
+        dressings = new ArrayList<String>();
+        oils = new ArrayList<String>();
+        basics = new ArrayList<String>();
+        canned = new ArrayList<String>();
+        sweets = new ArrayList<String>();
+        chips = new ArrayList<String>();
+        crackers = new ArrayList<String>();
+        cereals = new ArrayList<String>();
+        snacks = new ArrayList<String>();
+        drinks = new ArrayList<String>();
+        alcohol = new ArrayList<String>();
+        other = new ArrayList<String>();
+
     }
 
     private void prepareListChildren() {
@@ -263,7 +308,7 @@ public class PantryActivity extends AppCompatActivity {
         pc.open();
         c = pc.fetch();
         // Adding child data
-        List<String> meats = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!meats.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("meats")).equals("yes")) {
@@ -271,9 +316,9 @@ public class PantryActivity extends AppCompatActivity {
                 }
             } while (c.moveToNext());
         }
-        meats.add("Filet");
 
-        List<String> poultry = new ArrayList<String>();
+
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!poultry.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("poultry")).equals("yes")) {
@@ -282,7 +327,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> fish = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!fish.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("fish")).equals("yes")) {
@@ -291,7 +336,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> fruits = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!fruits.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("fruits")).equals("yes")) {
@@ -300,7 +345,6 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> vegetables = new ArrayList<String>();
         if (c != null && c.moveToFirst()) {
             do {
                 if (!vegetables.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("vegetables")).equals("yes")) {
@@ -309,7 +353,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> dairy = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!dairy.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("dairy")).equals("yes")) {
@@ -318,7 +362,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> breads = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!breads.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("breads")).equals("yes")) {
@@ -327,7 +371,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> jams = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!jams.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("jams")).equals("yes")) {
@@ -336,7 +380,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> sauces = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!sauces.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("sauces")).equals("yes")) {
@@ -345,7 +389,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> spices = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!spices.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("spices")).equals("yes")) {
@@ -354,7 +398,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> mixes = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!mixes.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("mixes")).equals("yes")) {
@@ -363,7 +407,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> dressings = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!dressings.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("dressings")).equals("yes")) {
@@ -372,7 +416,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> oils = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!oils.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("oils")).equals("yes")) {
@@ -381,25 +425,25 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> basic_ingredients = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
-                if (!basic_ingredients.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("basic_ingredients")).equals("yes")) {
-                    basic_ingredients.add(c.getString(c.getColumnIndex("_id")));
+                if (!basics.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("basics")).equals("yes")) {
+                    basics.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
         }
 
-        List<String> canned_foods = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
-                if (!canned_foods.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("canned_foods")).equals("yes")) {
-                    canned_foods.add(c.getString(c.getColumnIndex("_id")));
+                if (!canned.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("canned")).equals("yes")) {
+                    canned.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
         }
 
-        List<String> sweets = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!sweets.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("sweets")).equals("yes")) {
@@ -408,7 +452,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> chips = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!chips.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("chips")).equals("yes")) {
@@ -417,7 +461,7 @@ public class PantryActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
 
-        List<String> crackers = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!crackers.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("crackers")).equals("yes")) {
@@ -427,7 +471,7 @@ public class PantryActivity extends AppCompatActivity {
         }
 
 
-        List<String> cereals = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!cereals.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("cereals")).equals("yes")) {
@@ -437,7 +481,7 @@ public class PantryActivity extends AppCompatActivity {
         }
 
 
-        List<String> snacks = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!snacks.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("snacks")).equals("yes")) {
@@ -447,7 +491,7 @@ public class PantryActivity extends AppCompatActivity {
         }
 
 
-        List<String> drinks = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!drinks.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("drinks")).equals("yes")) {
@@ -457,7 +501,7 @@ public class PantryActivity extends AppCompatActivity {
         }
 
 
-        List<String> alcohol = new ArrayList<String>();
+
         if (c != null && c.moveToFirst()) {
             do {
                 if (!alcohol.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("alcohol")).equals("yes")) {
@@ -467,7 +511,6 @@ public class PantryActivity extends AppCompatActivity {
         }
 
 
-        List<String> other = new ArrayList<String>();
         if (c != null && c.moveToFirst()) {
             do {
                 if (!other.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("other")).equals("yes")) {
@@ -494,8 +537,8 @@ public class PantryActivity extends AppCompatActivity {
         listDataChild.put(listDataHeader.get(10), mixes);
         listDataChild.put(listDataHeader.get(11), dressings);
         listDataChild.put(listDataHeader.get(12), oils);
-        listDataChild.put(listDataHeader.get(13), basic_ingredients);
-        listDataChild.put(listDataHeader.get(14), canned_foods);
+        listDataChild.put(listDataHeader.get(13), basics);
+        listDataChild.put(listDataHeader.get(14), canned);
         listDataChild.put(listDataHeader.get(15), sweets);
         listDataChild.put(listDataHeader.get(16), chips);
         listDataChild.put(listDataHeader.get(17), crackers);
