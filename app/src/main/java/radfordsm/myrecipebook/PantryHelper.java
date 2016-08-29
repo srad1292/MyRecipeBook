@@ -10,34 +10,34 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class PantryHelper extends SQLiteOpenHelper {
 
     static final String TABLE_NAME = "Pantry";
-    static final String _id = "_id";
-    //static final String name = "name";
-    static final String meats = "Meats";
-    static final String poultry = "Poultry";
-    static final String fish = "Fish";
-    static final String fruits = "Fruits";
-    static final String vegetables = "Vegetables";
-    static final String dairy = "Dairy";
-    static final String breads = "Breads";
-    static final String jams = "Jams";
-    static final String sauces = "Sauces";
-    static final String spices = "Spices";
-    static final String mixes = "Mixes";
-    static final String dressings = "Dressings";
-    static final String oils = "Oils";
-    static final String basics = "Basics";
-    static final String canned = "Canned";
-    static final String sweets = "Sweets";
-    static final String chips = "Chips";
-    static final String crackers = "Crackers";
-    static final String cereals = "Cereals";
-    static final String snacks = "Snacks";
-    static final String drinks = "Drinks";
-    static final String alcohol = "Alcohol";
-    static final String other = "Other";
+    public static final String _id = "_id";
+    //public static final String name = "name";
+    public static final String meats = "Meats";
+    public static final String poultry = "Poultry";
+    public static final String fish = "Fish";
+    public static final String fruits = "Fruits";
+    public static final String vegetables = "Vegetables";
+    public static final String dairy = "Dairy";
+    public static final String breads = "Breads";
+    public static final String jams = "Jams";
+    public static final String sauces = "Sauces";
+    public static final String spices = "Spices";
+    public static final String mixes = "Mixes";
+    public static final String dressings = "Dressings";
+    public static final String oils = "Oils";
+    public static final String basics = "Basics";
+    public static final String canned = "Canned";
+    public static final String sweets = "Sweets";
+    public static final String chips = "Chips";
+    public static final String crackers = "Crackers";
+    public static final String cereals = "Cereals";
+    public static final String snacks = "Snacks";
+    public static final String drinks = "Drinks";
+    public static final String alcohol = "Alcohol";
+    public static final String other = "Other";
 
     static final String DB_NAME = "Pantry.DB";
-    static final int DB_VERSION = 4;
+    static final int DB_VERSION = 6;
 
 
     public PantryHelper(Context context){

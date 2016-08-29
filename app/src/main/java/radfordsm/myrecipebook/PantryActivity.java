@@ -161,17 +161,17 @@ public class PantryActivity extends AppCompatActivity {
                 final EditText item_name = (EditText) prompt.findViewById(R.id.pantry_prompt_text);
 
                 aDB.setCancelable(false).setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        // get user input and set it to result
-                                        // edit text
-                                        given_name = item_name.getText().toString();
-                                        Log.i("Given Name: ", given_name);
-                                        chosen = dropdown.getSelectedItem().toString();
-                                        Log.i("Chosen Spinner: ", chosen);
-                                        addNewItem(given_name,chosen);
-                                    }
-                                })
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+                                given_name = item_name.getText().toString();
+                                Log.i("Given Name: ", given_name);
+                                chosen = dropdown.getSelectedItem().toString();
+                                Log.i("Chosen Spinner: ", chosen);
+                                addNewItem(given_name,chosen);
+                            }
+                        })
                         .setNegativeButton("Cancel",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
@@ -215,6 +215,17 @@ public class PantryActivity extends AppCompatActivity {
         pc.close();
     }
 
+    private void resetCatMap(){
+        int iter = 0;
+        //Set s = category_map.entrySet();
+        //Iterator i = s.iterator();
+        for(Map.Entry<String, String> entry: category_map.entrySet()) {
+            category_map.put(entry.getKey(),"no");
+            iter++;
+        }
+
+    }
+
     public void addNewItem(String name, String cat){
         pc.open();
 
@@ -232,9 +243,9 @@ public class PantryActivity extends AppCompatActivity {
             if(iter > 0){
                 column_vals[iter] = entry.getValue();
                 /**
-                Log.i("entry key: ", entry.getKey());
-                Log.i("entry valye: ", entry.getValue());
-                Log.i("column vals " + iter + " ", column_vals[iter]);
+                 Log.i("entry key: ", entry.getKey());
+                 Log.i("entry valye: ", entry.getValue());
+                 Log.i("column vals " + iter + " ", column_vals[iter]);
                  */
             }
             iter++;
@@ -244,6 +255,7 @@ public class PantryActivity extends AppCompatActivity {
         pc.insert(column_vals);
         pc.close();
         prepareListChildren();
+        resetCatMap();
     }
 
     private void prepareListData() {
@@ -265,7 +277,7 @@ public class PantryActivity extends AppCompatActivity {
         listDataHeader.add("Mixes");
         listDataHeader.add("Dressings");
         listDataHeader.add("Oils");
-        listDataHeader.add("Basic");
+        listDataHeader.add("Basics");
         listDataHeader.add("Canned");
         listDataHeader.add("Sweets");
         listDataHeader.add("Chips");
@@ -307,11 +319,13 @@ public class PantryActivity extends AppCompatActivity {
 
         pc.open();
         c = pc.fetch();
+        String val;
         // Adding child data
 
         if (c != null && c.moveToFirst()) {
             do {
-                if (!meats.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("meats")).equals("yes")) {
+                val = c.getString(1);
+                if (!meats.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     meats.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
@@ -319,218 +333,240 @@ public class PantryActivity extends AppCompatActivity {
 
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!poultry.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("poultry")).equals("yes")) {
+                val = c.getString(2);
+                if (!poultry.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     poultry.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
+             do {
+                 val = c.getString(3);
+                 if (!fish.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
+                     fish.add(c.getString(c.getColumnIndex("_id")));
+                 }
+             } while (c.moveToNext());
+         }
+
+
+         if (c != null && c.moveToFirst()) {
+             do {
+                 val = c.getString(4);
+                 if (!fruits.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
+                     fruits.add(c.getString(c.getColumnIndex("_id")));
+                 }
+             } while (c.moveToNext());
+         }
+
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!fish.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("fish")).equals("yes")) {
-                    fish.add(c.getString(c.getColumnIndex("_id")));
-                }
-            } while (c.moveToNext());
-        }
-
-
-        if (c != null && c.moveToFirst()) {
-            do {
-                if (!fruits.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("fruits")).equals("yes")) {
-                    fruits.add(c.getString(c.getColumnIndex("_id")));
-                }
-            } while (c.moveToNext());
-        }
-
-        if (c != null && c.moveToFirst()) {
-            do {
-                if (!vegetables.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("vegetables")).equals("yes")) {
+                val = c.getString(5);
+                if (!vegetables.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     vegetables.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!dairy.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("dairy")).equals("yes")) {
+                val = c.getString(6);
+                if (!dairy.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     dairy.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!breads.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("breads")).equals("yes")) {
+                val = c.getString(7);
+                if (!breads.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     breads.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!jams.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("jams")).equals("yes")) {
+                val = c.getString(8);
+                if (!jams.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     jams.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!sauces.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("sauces")).equals("yes")) {
+                val = c.getString(9);
+                if (!sauces.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     sauces.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!spices.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("spices")).equals("yes")) {
-                    spices.add(c.getString(c.getColumnIndex("_id")));
+                val = c.getString(10);
+                if (!spices.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
+                 spices.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!mixes.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("mixes")).equals("yes")) {
+                val = c.getString(11);
+                if (!mixes.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     mixes.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!dressings.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("dressings")).equals("yes")) {
+                val = c.getString(12);
+                if (!dressings.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     dressings.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!oils.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("oils")).equals("yes")) {
+                val = c.getString(13);
+                if (!oils.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     oils.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!basics.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("basics")).equals("yes")) {
+                val = c.getString(14);
+                if (!basics.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     basics.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!canned.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("canned")).equals("yes")) {
+                val = c.getString(15);
+                if (!canned.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     canned.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!sweets.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("sweets")).equals("yes")) {
+                val = c.getString(16);
+                if (!sweets.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     sweets.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!chips.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("chips")).equals("yes")) {
+                val = c.getString(17);
+                if (!chips.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     chips.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!crackers.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("crackers")).equals("yes")) {
+                val = c.getString(18);
+                if (!crackers.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     crackers.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!cereals.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("cereals")).equals("yes")) {
+                val = c.getString(19);
+                if (!cereals.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     cereals.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!snacks.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("snacks")).equals("yes")) {
+                val = c.getString(20);
+                if (!snacks.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     snacks.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!drinks.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("drinks")).equals("yes")) {
+                val = c.getString(21);
+                if (!drinks.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     drinks.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!alcohol.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("alcohol")).equals("yes")) {
+                val = c.getString(22);
+                if (!alcohol.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     alcohol.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
-        if (c != null && c.moveToFirst()) {
+         if (c != null && c.moveToFirst()) {
             do {
-                if (!other.contains(c.getString(c.getColumnIndex("_id"))) && c.getString(c.getColumnIndex("other")).equals("yes")) {
+                val = c.getString(23);
+                if (!other.contains(c.getString(c.getColumnIndex("_id"))) && val.equals("yes")) {
                     other.add(c.getString(c.getColumnIndex("_id")));
                 }
             } while (c.moveToNext());
-        }
+         }
 
 
         pc.close();
 
 
 
-        listDataChild.put(listDataHeader.get(0), meats); 
+        listDataChild.put(listDataHeader.get(0), meats);
         listDataChild.put(listDataHeader.get(1), poultry);
         listDataChild.put(listDataHeader.get(2), fish);
-        listDataChild.put(listDataHeader.get(3), fruits); 
+        listDataChild.put(listDataHeader.get(3), fruits);
         listDataChild.put(listDataHeader.get(4), vegetables);
         listDataChild.put(listDataHeader.get(5), dairy);
-        listDataChild.put(listDataHeader.get(6), breads); 
+        listDataChild.put(listDataHeader.get(6), breads);
         listDataChild.put(listDataHeader.get(7), jams);
         listDataChild.put(listDataHeader.get(8), sauces);
         listDataChild.put(listDataHeader.get(9), spices);

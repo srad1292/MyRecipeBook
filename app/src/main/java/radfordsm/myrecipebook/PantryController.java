@@ -81,7 +81,7 @@ public class PantryController {
         cv.put(PantryHelper.canned,canned);
         cv.put(PantryHelper.sweets,sweets);
         cv.put(PantryHelper.chips,chips);
-        cv.put(PantryHelper.chips,crackers);
+        cv.put(PantryHelper.crackers,crackers);
         cv.put(PantryHelper.cereals,cereals);
         cv.put(PantryHelper.snacks,snacks);
         cv.put(PantryHelper.drinks,drinks);
@@ -123,7 +123,7 @@ public class PantryController {
         cv.put(PantryHelper.canned, v[15]);
         cv.put(PantryHelper.sweets, v[16]);
         cv.put(PantryHelper.chips, v[17]);
-        cv.put(PantryHelper.chips, v[18]);
+        cv.put(PantryHelper.crackers, v[18]);
         cv.put(PantryHelper.cereals, v[19]);
         cv.put(PantryHelper.snacks, v[20]);
         cv.put(PantryHelper.drinks, v[21]);
